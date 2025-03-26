@@ -1,103 +1,137 @@
-import Image from "next/image";
+import Link from 'next/link';
+import React from 'react';
 
-export default function Home() {
+const Page = () => {
+  const posts = [
+    {
+      id: 1,
+      title: 'C tutorials',
+      image:"/postimage.png",
+      body: 'This is the body of post 1',
+      author: 'Shyam Seshadri',
+      date: '2022-01-01'
+    },
+    {
+      id: 2,
+      title: 'Full stack script',
+      body: 'This is the body of post 2',
+      image:"/postimage.png",
+      author: 'Jane Doe',
+      date: '2022-01-02'
+    },
+    {
+      id: 3,
+      title: 'Python charge ',
+      body: 'This is the body of post 3',
+      image:"/postimage.png",
+      author: 'John Doe',
+      date: '2022-01-03'
+    },
+    {
+      id: 4,
+      title: 'Python charge ',
+      body: 'This is the body of post 3',
+      image:"/postimage.png",
+      author: 'John Doe',
+      date: '2022-01-03'
+    },
+  ];
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <main>
+      <section className="container px-4 py-10 mx-auto lg:h-128 lg:space-x-8 lg:flex lg:items-center">
+        <div className="w-full text-center lg:text-left lg:w-1/2 lg:-mt-8">
+          <h1 className="text-3xl leading-snug text-gray-800 dark:text-gray-200 md:text-4xl">
+            A <span className="font-semibold">free repository</span> for community
+            <br className="hidden lg:block" /> components using <span className="font-semibold underline decoration-primary">Tailwind CSS</span>
+          </h1>
+          <p className="mt-4 text-lg text-gray-500 dark:text-gray-300">
+            Open source Tailwind UI components and templates to
+            <br className="hidden lg:block" /> bootstrap your new apps, projects, or landing sites!
+          </p>
+          <div className="mt-6 bg-transparent border rounded-lg dark:border-gray-700 lg:w-2/3 focus-within:border-primary focus-within:ring focus-within:ring-primary dark:focus-within:border-primary focus-within:ring-opacity-20">
+            
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="w-full mt-4 lg:mt-0 lg:w-1/2">
+          <img src="https://www.creative-tim.com/twcomponents/svg/website-designer-bro-purple.svg" alt="tailwind css components" className="w-full h-full max-w-md mx-auto" />
+        </div>
+      </section>
+<section className="py-16 d  dark:bg-gray-950">
+  <div className="max-w-6xl mx-auto px-4">
+    <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-200 mb-8">
+      Choose Your Plan
+    </h2>
+    <div className="flex flex-wrap -mx-4">
+      {[
+        {
+          title: "Basic",
+          price: "$19",
+          features: ["Feature One", "Feature Two", "Feature Three","Feature Four", "Feature Five"],
+        },
+        {
+          title: "Standard",
+          price: "$49",
+          features: ["Feature One", "Feature Two", "Feature Three", "Feature Four", "Feature Five"],
+        },
+        {
+          title: "Premium",
+          price: "$99",
+          features: ["Feature One", "Feature Two", "Feature Three", "Feature Four", "Feature Five"],
+        },
+      ].map((plan, index) => (
+        <div key={index} className="w-full container mx-auto md:w-1/3 px-4 mb-8">
+          <div className="p-8  dark:bg-gray-900  hover:scale-105 transition-all rounded-lg shadow-lg hover:shadow-xl ">
+            <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-4">
+              {plan.title}
+            </h3>
+            <p className="text-3xl font-bold text-primary mb-6">{plan.price}/month</p>
+            <ul className="mb-6">
+              {plan.features.map((feature, i) => (
+                <li key={i} className="flex items-center mb-2">
+                  <span className="text-primary mr-2">✔</span>
+                  <span className="text-gray-600 dark:text-gray-400">{feature}</span>
+                </li>
+              ))}
+            </ul>
+            <button className="w-full cursor-pointer hover:scale-105 transition-all py-2 bg-primary text-white rounded-lg hover:bg-primary/40">
+              Choose Plan
+            </button>
+          </div>
+        </div>
+      ))}
     </div>
+  </div>
+</section>
+<section className='container  mx-auto px-4 py-10'>
+<h1 className="text-4xl font-bold mb-8">Latest Blog Posts</h1>
+      <div className="grid grid-cols-1 p-4 focus:outline border  md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.map((post) => (
+          <article 
+            key={post.id}
+            className=" rounded-lg  dark:bg-gray-950 dark:border-gray-700 hover:scale-105 transition-all shadow-md overflow-hidden hover:shadow-lg "
+          >
+            <Link href={`/blog/${post.title}`}>
+              <div className="p-6">
+                <div className='w-full container mx-auto'>
+                  <img className='w-full' src={post.image} alt="image" />
+                </div>
+                <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
+                <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                <div className="flex items-center text-sm text-gray-500">
+                  <time dateTime={post.date}>{post.date}</time>
+                  <span className="mx-2">•</span>
+                  <span>{post.readingTime} min read</span>
+                </div>
+              </div>
+            </Link>
+          </article>
+        ))}
+      </div>
+</section>
+
+
+    </main>
   );
-}
+};
+
+export default Page;
