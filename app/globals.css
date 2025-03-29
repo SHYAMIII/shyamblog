@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -72,7 +73,7 @@
   }
 
   .dark {
-    --background: hsl(222.2, 84%, 4.9%);
+    --background: hsl(265, 55%, 4%);
     --foreground: hsl(210, 40%, 98%);
     --card: hsl(222.2, 84%, 4.9%);
     --card-foreground: hsl(210, 40%, 98%);
