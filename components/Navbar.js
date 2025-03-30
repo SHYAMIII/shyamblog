@@ -16,7 +16,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="backdrop-blur bg-background/50 z-10 sticky top-0 border-gray-400 relative">
+      <nav className="backdrop-blur bg-background/50 z-10 sticky top-0 border-gray-400">
         <div className="max-w-7xl py-0 mx-auto px-4">
           <div className="flex justify-between items-center h-12">
             {/* Logo */}
@@ -97,7 +97,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.path}
-                className=" font-bold hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300"
+                className="  hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {link.name}
