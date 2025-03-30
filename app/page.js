@@ -1,28 +1,52 @@
+"use client";
 import Link from 'next/link';
-import React from 'react';
-
+import React, { useEffect, useRef } from 'react';
+import Typed from 'typed.js';
+  
 const Page = () => {
+
+
+
+  const el = useRef(null);
+
+  useEffect(() => {
+    const typed = new Typed(el.current, {
+      strings: ['Coding', 'Programming', 'Web Development', 'Software Engineering', 'Data Science', 'Machine Learning'],
+      typeSpeed: 50,
+    });
+
+    return () => {
+      // Destroy Typed instance during cleanup to stop animation
+      typed.destroy();
+    };
+  }, []);
+
+
+
   const posts = [
     {
       id: 1,
-      title: 'C tutorials',
+      title: 'js-hindi-tutorial',
       image:"https://w0.peakpx.com/wallpaper/902/931/HD-wallpaper-why-project-managers-need-business-analysts-for-project-success-business-analysis.jpg",
       body: 'This is the body of post 1',
+      slug: 'js-hindi-tutorial',
       author: 'Shyam Seshadri',
       date: '2022-01-01'
     },
     {
       id: 2,
-      title: 'Full stack script',
+      title: 'Next-js-tutorial-in-hindi',
       body: 'This is the body of post 2',
       image:"https://png.pngtree.com/thumb_back/fh260/background/20241126/pngtree-symbolizing-the-intricacies-of-project-management-abstract-blue-background-with-gears-image_16658430.jpg",
       author: 'Jane Doe',
+      slug : 'Next-js-tutorial-in-hindi',
       date: '2022-01-02'
     },
     {
       id: 3,
-      title: 'Python charge ',
+      title: 'react-js-hindi ',
       body: 'This is the body of post 3',
+      slug : 'react-js-hindi',
       image:"https://png.pngtree.com/thumb_back/fh260/background/20241126/pngtree-symbolizing-the-intricacies-of-project-management-abstract-blue-background-with-gears-image_16658430.jpg",
       author: 'John Doe',
       date: '2022-01-03'
@@ -33,12 +57,12 @@ const Page = () => {
       <section className="container px-4 py-10 mx-auto lg:h-128 lg:space-x-8 lg:flex lg:items-center">
         <div className="w-full text-center lg:text-left lg:w-1/2 lg:-mt-8">
           <h1 className="text-3xl leading-snug text-gray-800 dark:text-gray-200 md:text-4xl">
-            A <span className="font-semibold">free repository</span> for community
-            <br className="hidden lg:block" /> components using <span className="font-semibold underline decoration-primary">Tailwind CSS</span>
+            A <span className="font-semibold">Learning Website</span> for community
+            <br className="hidden lg:block" /> knowledge using <span className="font-semibold underline decoration-primary"><span ref={el} /></span>
           </h1>
           <p className="mt-4 text-lg text-gray-500 dark:text-gray-300">
-            Open source Tailwind UI components and templates to
-            <br className="hidden lg:block" /> bootstrap your new apps, projects, or landing sites!
+            Open source blog website to learn skills and new tech trends of web development.
+            <br className="hidden lg:block" /> boost your new apps, projects, or landing sites!
           </p>
           <div className="mt-6 bg-transparent border rounded-lg dark:border-gray-700 lg:w-2/3 focus-within:border-primary focus-within:ring focus-within:ring-primary dark:focus-within:border-primary focus-within:ring-opacity-20">
             
@@ -57,7 +81,7 @@ const Page = () => {
             key={post.id}
             className=" rounded-lg  dark:bg-gray-950 dark:border-gray-700 shadow-gray-700 transition-all shadow-md hover:shadow-xl overflow-hidden "
           >
-            <Link href={`/blog/${post.title}`}>
+            <Link href={`/blogs/${post.slug}`}>
               <div className="p-6">
                 <div className='w-full container mx-auto'>
                   <img className='w-full' src={post.image} alt="image" />

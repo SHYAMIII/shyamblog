@@ -8,6 +8,8 @@ import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import { unified } from 'unified'
 import { reporter } from 'vfile-reporter'
+import rehypePrettyCode from "rehype-pretty-code";
+
 
 export default async function Page({ params }) {
   const filepath = `content/${params.slug}.md`
@@ -25,6 +27,10 @@ export default async function Page({ params }) {
     .use(rehypeDocument, { title: '👋🌍' })
     .use(rehypeFormat)
     .use(rehypeStringify)
+    .use(rehypePrettyCode, {
+      theme: 'github-dark-dimmed',
+      
+        })
 
   const htmlContent = (await file.process(content)).toString()
 
