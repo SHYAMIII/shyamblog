@@ -3,17 +3,14 @@
 import { useState } from 'react';
 
 export default function ContactPage() {
-    const [Name, setName] = useState('');
-    const [Email, setEmail] = useState('');
-    const [Message, setMessage] = useState('');
-    const [submitted, setSubmitted] = useState(false);
-
-  
+  const [Name, setName] = useState('');
+  const [Email, setEmail] = useState('');
+  const [Message, setMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(Message);
-    
     setSubmitted(true);
     // Here, you can integrate with an API or backend service to handle form submissions
   };
@@ -35,11 +32,11 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="max-w-3xl  p-6 dark:text-gray-300 mx-3 dark:bg-gray-900 mt-8 shadow-blue-700 shadow-lg border rounded-xl text-gray-800">
+    <div className="max-w-3xl  p-6 dark:text-gray-300 md:mx-auto mx-3 dark:bg-gray-900 mt-8 shadow-blue-700 shadow-lg border rounded-xl text-gray-800">
       <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
       <p className="text-lg mb-6">Have any questions or suggestions? Feel free to reach out!</p>
       {submitted ? (
-        <p className="text-green-600 text-lg">Thank you for your message! We'll get back to you soon.</p>
+        <p className="text-green-600 text-lg">Thank you for your message! We&#39;ll get back to you soon.</p>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
           <input 
@@ -52,7 +49,7 @@ export default function ContactPage() {
             required 
           />
           <input 
-            type="Email" 
+            type="email" 
             name="Email" 
             value={Email} 
             onChange={handleChange} 
