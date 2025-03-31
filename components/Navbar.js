@@ -39,19 +39,23 @@ export default function Navbar() {
                 </Link>
               ))}
             </div>
-            <div className="hidden md:flex space-x-8">
-              <Link
-                href="/"
-                className="mx-3 items-center flex border px-3 py-1 hover:bg-blue-950 transition-all text-sm font-medium rounded-full"
-              >
-                Signup
+            <div className="hidden  md:flex space-x-8">
+              
+              <span className='flex px-2 cursor-pointer  items-center space-x-4 outline-gray-500 outline hover:bg-red-600 hover:text-red-200 rounded-md'>
+              <Link href={'/Admin'} className="hover:-translate-y-1 transition-all px-3 rounded-md text-sm font-medium">
+                Admin
               </Link>
+             </span>
+              <span className="flex items-center cursor-pointer  space-x-4 outline-gray-500 outline hover:bg-gray-400 hover:text-black rounded-md">
+
+
               <Link
-                href="/"
-                className="mx-3 items-center flex border px-3 py-1 hover:bg-blue-950 transition-all text-sm font-medium rounded-full"
+                href="https://github.com/shyamiii" target='_blank'
+                className="hover:-translate-y-1 transition-all px-3 rounded-md text-sm font-medium"
               >
-                Login
+                Github
               </Link>
+              </span>
               <ModeToggle />
             </div>
 
