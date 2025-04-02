@@ -1,12 +1,11 @@
 "use client";
 import Link from 'next/link';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
   
 const Page = () => {
 
-
-
+  const [posts, setPosts] = useState([]);
   const el = useRef(null);
 
   useEffect(() => {
@@ -21,37 +20,22 @@ const Page = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/addcontent');
+        const data = await response.json();
+        if (data.success) {
+          setPosts(data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
 
+    fetchPosts();
+  }, []);
 
-  const posts = [
-    {
-      id: 1,
-      title: 'js-hindi-tutorial',
-      image:"https://w0.peakpx.com/wallpaper/902/931/HD-wallpaper-why-project-managers-need-business-analysts-for-project-success-business-analysis.jpg",
-      body: 'This is the body of post 1',
-      slug: 'js-hindi-tutorial',
-      author: 'Shyam Seshadri',
-      date: '2022-01-01'
-    },
-    {
-      id: 2,
-      title: 'Next-js-tutorial-in-hindi',
-      body: 'This is the body of post 2',
-      image:"https://png.pngtree.com/thumb_back/fh260/background/20241126/pngtree-symbolizing-the-intricacies-of-project-management-abstract-blue-background-with-gears-image_16658430.jpg",
-      author: 'Jane Doe',
-      slug : 'Next-js-tutorial-in-hindi',
-      date: '2022-01-02'
-    },
-    {
-      id: 3,
-      title: 'react-js-hindi ',
-      body: 'This is the body of post 3',
-      slug : 'react-js-hindi',
-      image:"https://png.pngtree.com/thumb_back/fh260/background/20241126/pngtree-symbolizing-the-intricacies-of-project-management-abstract-blue-background-with-gears-image_16658430.jpg",
-      author: 'John Doe',
-      date: '2022-01-03'
-    },
-  ];
   return (
     <main>
       <section className="container px-4 py-10 mx-auto lg:h-128 lg:space-x-8 lg:flex lg:items-center">
@@ -73,25 +57,31 @@ const Page = () => {
         </div>
       </section>
 
-<section className='md:container mx-3  md:mx-auto px-4 rounded-2xl bg-gray-100 dark:bg-[#1b1136] py-10'>
+<section className='md:container mx-3 md:mx-auto px-4 rounded-2xl bg-gray-100 dark:bg-[#1b1136] py-10'>
 <h1 className="text-4xl font-bold mb-8">Latest Blog Posts</h1>
-      <div className="grid grid-cols-1 p-4   md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 p-4 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post) => (
           <article 
-            key={post.id}
-            className=" rounded-lg  dark:bg-gray-950 dark:border-gray-700 shadow-gray-700 transition-all shadow-md hover:shadow-xl overflow-hidden "
+            key={post._id}
+            className="rounded-lg dark:bg-gray-950 dark:border-gray-700 shadow-gray-700 transition-all shadow-md hover:shadow-xl overflow-hidden"
           >
             <Link href={`/blogs/${post.slug}`}>
               <div className="p-6">
-                <div className='w-full container mx-auto'>
-                  <img className='w-full' src={post.image} alt="image" />
+                <div className='h-48 w-full overflow-hidden'>
+                  <img 
+                    className='w-full h-full object-cover' 
+                    src={post.image} 
+                    alt={post.title}
+                  />
                 </div>
-                <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
-                <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                <h2 className="text-xl font-semibold m-2 line-clamp-2 ">{post.title}</h2>
+                <p className="text-gray-600 mb-1 line-clamp-3 ">{post.description}</p>
                 <div className="flex items-center text-sm dark:text-gray-500">
-                  <time dateTime={post.date}>{post.date}</time>
+                  {/* <time dateTime={new Date(post.date).toLocaleString()}>
+                    {new Date(post.date).toLocaleDateString()}
+                  </time> */}
                   <span className="mx-2">•</span>
-                  <span>{post.readingTime} min read</span>
+                  <span>{post.author}</span>
                 </div>
               </div>
             </Link>
