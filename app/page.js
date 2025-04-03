@@ -2,21 +2,29 @@
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
-  
-const Page = () => {
 
+const Page = () => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const el = useRef(null);
+  const typed = useRef(null);
 
   useEffect(() => {
-    const typed = new Typed(el.current, {
-      strings: ['Coding', 'Programming', 'Web Development', 'Software Engineering', 'Data Science', 'Machine Learning'],
-      typeSpeed: 50,
-    });
+    if (el.current) {
+      typed.current = new Typed(el.current, {
+        strings: ['Coding', 'Programming', 'Web Development', 'Software Engineering', 'Data Science', 'Machine Learning'],
+        typeSpeed: 50,
+        loop: true,
+        showCursor: true,
+        cursorChar: '|',
+        autoInsertCss: true,
+      });
+    }
 
     return () => {
-      // Destroy Typed instance during cleanup to stop animation
-      typed.destroy();
+      if (typed.current) {
+        typed.current.destroy();
+      }
     };
   }, []);
 
@@ -30,11 +38,21 @@ const Page = () => {
         }
       } catch (error) {
         console.error('Error fetching posts:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchPosts();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center dark:bg-gray-900">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <main>
@@ -53,44 +71,43 @@ const Page = () => {
           </div>
         </div>
         <div className="w-full mt-4 lg:mt-0 lg:w-1/2">
-          <img src="https://www.creative-tim.com/twcomponents/svg/website-designer-bro-purple.svg" alt="tailwind css components" className="w-full h-full max-w-md mx-auto" />
+          <img 
+            src="https://www.creative-tim.com/twcomponents/svg/website-designer-bro-purple.svg" 
+            alt="tailwind css components" 
+            className="w-full h-full max-w-md mx-auto" 
+          />
         </div>
       </section>
 
-<section className='md:container mx-3 md:mx-auto px-4 rounded-2xl bg-gray-100 dark:bg-[#1b1136] py-10'>
-<h1 className="text-4xl font-bold mb-8">Latest Blog Posts</h1>
-      <div className="grid grid-cols-1 p-4 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {posts.map((post) => (
-          <article 
-            key={post._id}
-            className="rounded-lg dark:bg-gray-950 dark:border-gray-700 shadow-gray-700 transition-all shadow-md hover:shadow-xl overflow-hidden"
-          >
-            <Link href={`/blogs/${post.slug}`}>
-              <div className="p-6">
-                <div className='h-48 w-full overflow-hidden'>
-                  <img 
-                    className='w-full h-full object-cover' 
-                    src={post.image} 
-                    alt={post.title}
-                  />
+      <section className='md:container mx-3 md:mx-auto px-4 rounded-2xl bg-gray-100 dark:bg-[#1b1136] py-10'>
+        <h1 className="text-4xl font-bold mb-8">Latest Blog Posts</h1>
+        <div className="grid grid-cols-1 p-4 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((post) => (
+            <article 
+              key={post._id}
+              className="rounded-lg dark:bg-gray-950 dark:border-gray-700 shadow-gray-700 transition-all shadow-md hover:shadow-xl overflow-hidden"
+            >
+              <Link href={`/blogs/${post.slug}`}>
+                <div className="p-6">
+                  <div className='h-48 w-full overflow-hidden'>
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h2 className="text-xl font-semibold m-2 line-clamp-2 ">{post.title}</h2>
+                  <p className="text-gray-600 mb-1 line-clamp-3 ">{post.description}</p>
+                  <div className="flex items-center text-sm dark:text-gray-500">
+                    <span className="mx-2">•</span>
+                    <span>{post.author}</span>
+                  </div>
                 </div>
-                <h2 className="text-xl font-semibold m-2 line-clamp-2 ">{post.title}</h2>
-                <p className="text-gray-600 mb-1 line-clamp-3 ">{post.description}</p>
-                <div className="flex items-center text-sm dark:text-gray-500">
-                  {/* <time dateTime={new Date(post.date).toLocaleString()}>
-                    {new Date(post.date).toLocaleDateString()}
-                  </time> */}
-                  <span className="mx-2">•</span>
-                  <span>{post.author}</span>
-                </div>
-              </div>
-            </Link>
-          </article>
-        ))}
-      </div>
-</section>
-
-
+              </Link>
+            </article>
+          ))}
+        </div>
+      </section>
     </main>
   );
 };

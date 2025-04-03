@@ -1,54 +1,69 @@
-"use client";
+  "use client";
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function BlogPage() {
-  const [posts, setPosts] = useState([]);
+  const [contents, setContents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchContents = async () => {
       try {
         const response = await fetch('/api/addcontent');
         const data = await response.json();
         if (data.success) {
-          setPosts(data.data);
+          setContents(data.data);
         }
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error('Error fetching contents:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchPosts();
+    fetchContents();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center dark:bg-gray-900">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen py-8">
-      <div className="max-w-6xl mx-auto px-4">
-        <h1 className="text-4xl font-bold dark:text-white text-gray-900 mb-8">All Blog Posts</h1>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.map((post) => (
-            <article 
-              key={post._id}
-              className="dark:bg-gray-950 bg-gray-100 rounded-lg shadow-gray-700 shadow-lg dard:shadow overflow-hidden hover:shadow-xl transition-shadow duration-300"
-            >
-              <img 
-                src={post.image} 
-                alt={post.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
-                {/* <p className="text-sm mb-2">{new Date(post.date).toLocaleDateString()}</p> */}
-                <h2 className="text-xl font-semibold dark:text-white text-gray-800 mb-3">{post.title}</h2>
-                <p className="dark:text-gray-400 text-gray-600 mb-4">{post.description}</p>
-                <Link 
-                  href={`/blogs/${post.slug}`}
-                  className="inline-block bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-300"
-                >
-                  Read More →
-                </Link>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">All Blog Posts</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {contents.map((content) => (
+            <Link href={`/blogs/${content.slug}`} key={content._id}>
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                {content.image && (
+                  <div className="relative h-48 w-full">
+                    <img
+                      src={content.image}
+                      alt={content.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <div className="p-6">
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    {content.title}
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    {content.description}
+                  </p>
+                  <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                    <span>By {content.author}</span>
+                    <span className="mx-2">•</span>
+                    
+                  </div>
+                </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </div>

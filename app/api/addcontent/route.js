@@ -2,13 +2,40 @@ import Content from "@/models/Content";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
-export async function POST(request) {
+// Helper function to generate URL-friendly slug
+function generateSlug(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // Remove special characters
+    .replace(/\s+/g, '-')     // Replace spaces with hyphens
+    .replace(/-+/g, '-')      // Replace multiple hyphens with single hyphen
+    .trim();                  // Remove leading/trailing spaces
+}
 
-  
-  
-    let data =await request.json();
-  console.log(data);
-    const client = await mongoose.connect(process.env.MONGODB_URI)
+export async function POST(request) {
+  try {
+    let data = await request.json();
+    console.log(data);
+
+    // Generate slug from title if not provided
+    if (!data.slug) {
+      data.slug = generateSlug(data.title);
+    } else {
+      // Format provided slug to be URL-friendly
+      data.slug = generateSlug(data.slug);
+    }
+
+    const client = await mongoose.connect(process.env.MONGODB_URI);
+    
+    // Check if slug already exists
+    const existingContent = await Content.findOne({ slug: data.slug });
+    if (existingContent) {
+      return NextResponse.json(
+        { success: false, error: "A post with this slug already exists" },
+        { status: 400 }
+      );
+    }
+
     const NewContent = await new Content({
       title: data.title,
       description: data.description,
@@ -17,14 +44,18 @@ export async function POST(request) {
       author: data.author,
       image: data.image,
       content: data.content,
-    })
-    await NewContent.save();
-  
-    // console.log(product);
-    return NextResponse.json({success: true,data:"yes",data})
+    });
     
+    await NewContent.save();
+    return NextResponse.json({ success: true, data: NewContent });
+  } catch (error) {
+    console.error('Error creating content:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to create content' },
+      { status: 500 }
+    );
   }
-  
+}
 
 export async function GET() {
   try {
